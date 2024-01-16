@@ -1,0 +1,94 @@
+class ContactManager:
+    def __init__(self):
+        self.contacts = []
+
+    def add_contact(self, name, phone, email):
+        self.contacts.append({'Name': name, 'Phone': phone, 'Email': email})
+        print(f"Contact {name} added successfully!")
+
+    def view_contacts(self):
+        if not self.contacts:
+            print("No contacts found.")
+        else:
+            print("Contacts:")
+            for contact in self.contacts:
+                print(f"Name: {contact['Name']}, Phone: {contact['Phone']}, Email: {contact['Email']}")
+
+    def edit_contact(self, name, phone, email):
+        for contact in self.contacts:
+            if contact['Name'] == name:
+                contact['Phone'] = phone
+                contact['Email'] = email
+                print(f"Contact {name} updated successfully!")
+                return
+        print(f"Contact {name} not found.")
+
+    def delete_contact(self, name):
+        for contact in self.contacts:
+            if contact['Name'] == name:
+                self.contacts.remove(contact)
+                print(f"Contact {name} deleted successfully!")
+                return
+        print(f"Contact {name} not found.")
+
+    def save_contacts(self, filename='contacts.txt'):
+        with open(filename, 'w') as file:
+            for contact in self.contacts:
+                file.write(f"{contact['Name']},{contact['Phone']},{contact['Email']}\n")
+        print(f"Contacts saved to {filename}")
+
+    def load_contacts(self, filename='contacts.txt'):
+        try:
+            with open(filename, 'r') as file:
+                lines = file.readlines()
+                self.contacts = []
+                for line in lines:
+                    name, phone, email = line.strip().split(',')
+                    self.contacts.append({'Name': name, 'Phone': phone, 'Email': email})
+                print(f"Contacts loaded from {filename}")
+        except FileNotFoundError:
+            print("No previous contacts found.")
+
+def main():
+    contact_manager = ContactManager()
+
+    while True:
+        print("\nContact Management System:")
+        print("1. Add a new contact")
+        print("2. View contacts")
+        print("3. Edit a contact")
+        print("4. Delete a contact")
+        print("5. Save contacts")
+        print("6. Load contacts")
+        print("7. Exit")
+
+        choice = input("Enter your choice (1-7): ")
+
+        if choice == "1":
+            name = input("Enter the contact's name: ")
+            phone = input("Enter the contact's phone number: ")
+            email = input("Enter the contact's email address: ")
+            contact_manager.add_contact(name, phone, email)
+        elif choice == "2":
+            contact_manager.view_contacts()
+        elif choice == "3":
+            name = input("Enter the name of the contact you want to edit: ")
+            phone = input("Enter the new phone number: ")
+            email = input("Enter the new email address: ")
+            contact_manager.edit_contact(name, phone, email)
+        elif choice == "4":
+            name = input("Enter the name of the contact you want to delete: ")
+            contact_manager.delete_contact(name)
+        elif choice == "5":
+            contact_manager.save_contacts()
+        elif choice == "6":
+            contact_manager.load_contacts()
+        elif choice == "7":
+            contact_manager.save_contacts()
+            print("Exiting...")
+            break
+        else:
+            print("Invalid choice. Please enter a number between 1 and 7.")
+
+if __name__ == "__main__":
+    main()
