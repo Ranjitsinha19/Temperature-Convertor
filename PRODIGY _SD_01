@@ -1,0 +1,28 @@
+# Create a program that allows a user to convert temperature between Fahrenite.
+
+#Function to convert celcius into Fahrenhite
+def cel_to_far():
+    cel = int(input("Enter the degree celcius value :"))
+    far = cel*(9/5)+32
+    print("The value of degree fahrenhite is :",far)
+
+#Function to convert celcius into Kelvin
+def cel_to_kel():
+    cel = int(input("Enter the degree celcius value :"))
+    kel = cel + 273.15
+    print("The value of kelvin is :",kel)
+
+print("WELCOME to the Temperature Converter")
+
+print("Choose the operation you want to perform")
+print("1)Celcius to Fahrenhite")
+print("2)Celcius to Kelvin")
+
+choice = int(input("Enter the choice :"))
+
+if choice == 1:
+    cel_to_far()
+elif choice == 2:
+    cel_to_kel()
+else:
+    print("Invalid Choice")
